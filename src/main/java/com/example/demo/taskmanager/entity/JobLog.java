@@ -1,7 +1,12 @@
 package com.example.demo.taskmanager.entity;
 
 import com.example.demo.common.entity.BaseEntity;
+import com.example.demo.taskmanager.dto.JobStatus;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,13 +26,13 @@ public class JobLog extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_id")
     Job job;
 
-    String status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    JobStatus status;
 
     String description;
-
-    String provider;
 }
