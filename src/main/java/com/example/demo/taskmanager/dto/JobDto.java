@@ -6,23 +6,28 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 public class JobDto {
 
-    String provider;
     String jobId;
-    String status;
+    JobStatus status;
     String description;
 
-    public Job toJobEntity(String jobId) {
-        this.jobId = jobId;
+    public JobDto(Job job) {
+        jobId = job.getJobId();
+        status = job.getStatus();
+        description = job.getDescription();
+    }
+
+    public Job toJobEntity() {
         return Job.builder()
             .jobId(this.jobId)
-            .provider(this.provider)
             .status(this.status)
             .description(this.description)
             .build();
@@ -33,7 +38,6 @@ public class JobDto {
             .job(job)
             .description(this.description)
             .status(this.status)
-            .provider(this.provider)
             .build();
     }
 }
