@@ -1,6 +1,7 @@
 package com.example.demo.amqp;
 
-import com.example.demo.amqp.pojo.CustomMessage;
+import com.example.demo.taskmanager.dto.JobDto;
+import com.example.demo.taskmanager.dto.JobStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +17,10 @@ public class AmqpController {
 
     @GetMapping("/sample/queue")
     public String samplePublish() {
-        rabbitTemplate.convertAndSend(EXCHANGE_NAME, "sample.code5753.#", CustomMessage.builder()
-            .text("RabbitMQ + Spring!")
+        rabbitTemplate.convertAndSend(EXCHANGE_NAME, "sample.code5753.#", JobDto.builder()
+            .jobId("1")
+            .status(JobStatus.DONE)
+            .description("RabbitMQ + Spring!")
             .build());
         return "message sending!";
     }
